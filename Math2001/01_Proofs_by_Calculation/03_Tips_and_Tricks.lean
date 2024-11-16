@@ -151,13 +151,14 @@ example {c : ℚ} (h1 : 4 * c + 1 = 3 * c - 2) : c = -3 :=
     _ = 3 * c - 2 - (3 * c - 2) - 3 := by rw[h1]
     _ = -3 := by ring
 
+
 example {p : ℝ} (h1 : 5 * p - 3 = 3 * p + 1) : p = 2 :=
   calc
-    p = p + (5 * p - 3) - (5 * p - 3) := by ring
-    _ = p + (3 * p + 1) - (5 * p - 3) := by rw [h1]
-    _ = p - 2 * p + 4 := by ring
-    _ = -p + 4 := by ring
-    _ = 2 := by sorry
+    p = (2*p) / 2 := by ring
+    _ = ((5*p-3) + (5*p-3) + (3*p+1) - (3*p+1) - (3*p+1) - (5*p-3) + 4) / 2 := by ring
+    _ = ((3*p+1) + (3*p+1) + (5*p-3) - (3*p+1) - (3*p+1) - (5*p-3) + 4) / 2 := by rw[h1]
+    _ = 4 / 2 := by ring
+    _ = 2 := by ring
 
 example {x y : ℤ} (h1 : 2 * x + y = 4) (h2 : x + y = 1) : x = 3 :=
   calc
@@ -193,8 +194,15 @@ example {t : ℚ} (ht : t ^ 2 - 4 = 0) :
 
 example {x y : ℝ} (h1 : x + 3 = 5) (h2 : 2 * x - y * x = 0) : y = 2 :=
   calc
-    y = 2 := by sorry
+    y = y + (0) / 2 := by ring
+    _ = y + (2 * x - y * x) / 2 := by rw [h2]
+    _ = y + (x + 3 - 3)*(2 - y) / 2 := by ring
+    _ = y + (5 - 3) * (2 - y) / 2 := by rw [h1]
+    _ = 2 := by ring
 
 example {p q r : ℚ} (h1 : p + q + r = 0) (h2 : p * q + p * r + q * r = 2) :
     p ^ 2 + q ^ 2 + r ^ 2 = -4 :=
-  sorry
+    calc
+      p ^ 2 + q ^ 2 + r ^ 2 = (p+q+r)^2 - 2*(p*q + p*r + q*r) := by ring
+      _ = 0^2 - 2*2 := by rw[h1,h2]
+      _ = -4 := by ring
